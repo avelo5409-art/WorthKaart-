@@ -15,11 +15,59 @@ export default async function handler(req, res) {
       });
     }
 
-    // Exact PDF filename inside the private "ebook" bucket
+    // Access token from customer link
+    const token = req.query.token;
+
+    if (!token || typeof token !== "string") {
+      return res.status(401).json({
+        error: "Access token required",
+      });
+    }
+
+    // Verify that this token belongs to a paid order
+    const orderResponse = await fetch(
+      `${supabaseUrl}/rest/v1/orders?access_token=eq.${encodeURIComponent(
+        token
+      )}&status=eq.paid&select=id,email,access_expires_at`,
+      {
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+        },
+      }
+    );
+
+    if (!orderResponse.ok) {
+      return res.status(500).json({
+        error: "Could not verify access",
+      });
+    }
+
+    const orders = await orderResponse.json();
+
+    if (!orders.length) {
+      return res.status(403).json({
+        error: "Invalid or inactive access link",
+      });
+    }
+
+    const order = orders[0];
+
+    // NULL expiry = lifetime access
+    if (
+      order.access_expires_at &&
+      new Date(order.access_expires_at) <= new Date()
+    ) {
+      return res.status(403).json({
+        error: "Access link has expired",
+      });
+    }
+
+    // Exact PDF filename inside private "ebook" bucket
     const filePath =
       "Bachelor's_Kitchen_99_High_Protein_Recipes (1).pdf";
 
-    // Create a temporary signed URL valid for 5 minutes
+    // Generate a temporary signed URL
     const response = await fetch(
       `${supabaseUrl}/storage/v1/object/sign/ebook/${encodeURIComponent(
         filePath
