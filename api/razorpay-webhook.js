@@ -10,21 +10,17 @@ function getRawBody(req) {
   return new Promise((resolve, reject) => {
     const chunks = [];
 
-    req.on("data", (chunk) => {
-      chunks.push(chunk);
-    });
-
-    req.on("end", () => {
-      resolve(Buffer.concat(chunks));
-    });
-
+    req.on("data", (chunk) => chunks.push(chunk));
+    req.on("end", () => resolve(Buffer.concat(chunks)));
     req.on("error", reject);
   });
 }
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).json({
+      error: "Method not allowed",
+    });
   }
 
   try {
@@ -38,9 +34,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // Get the exact raw request body
     const rawBody = await getRawBody(req);
-
     const signature = req.headers["x-razorpay-signature"];
 
     if (!signature) {
@@ -49,7 +43,6 @@ export default async function handler(req, res) {
       });
     }
 
-    // Verify Razorpay webhook signature
     const expectedSignature = crypto
       .createHmac("sha256", webhookSecret)
       .update(rawBody)
@@ -69,14 +62,18 @@ export default async function handler(req, res) {
 
     const payload = JSON.parse(rawBody.toString("utf8"));
 
-    const event = payload.event;
-    const payment = payload.payload?.payment?.entity;
-
-    // We only process captured payments
-    if (event !== "payment.captured" || !payment) {
+    if (payload.event !== "payment.captured") {
       return res.status(200).json({
         received: true,
         processed: false,
+      });
+    }
+
+    const payment = payload.payload?.payment?.entity;
+
+    if (!payment) {
+      return res.status(400).json({
+        error: "Payment data missing",
       });
     }
 
@@ -90,7 +87,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // Check whether this payment was already recorded
+    // Check if this payment was already processed
     const existingResponse = await fetch(
       `${supabaseUrl}/rest/v1/orders?razorpay_payment_id=eq.${encodeURIComponent(
         paymentId
@@ -111,7 +108,6 @@ export default async function handler(req, res) {
 
     const existingOrders = await existingResponse.json();
 
-    // Don't create duplicate order records
     if (existingOrders.length > 0) {
       return res.status(200).json({
         received: true,
@@ -120,7 +116,10 @@ export default async function handler(req, res) {
       });
     }
 
-    // Save verified payment in Supabase
+    // Generate secure lifetime access token
+    const accessToken = crypto.randomBytes(32).toString("hex");
+
+    // Save paid order + access token
     const response = await fetch(
       `${supabaseUrl}/rest/v1/orders`,
       {
@@ -136,18 +135,23 @@ export default async function handler(req, res) {
           razorpay_order_id: orderId,
           razorpay_payment_id: paymentId,
           status: "paid",
+          access_token: accessToken,
+          access_expires_at: null,
         }),
       }
     );
 
     if (!response.ok) {
       const errorText = await response.text();
+
       console.error("Supabase error:", errorText);
 
       return res.status(500).json({
         error: "Failed to save payment",
       });
     }
+
+    console.log("Payment recorded successfully:", paymentId);
 
     return res.status(200).json({
       received: true,
