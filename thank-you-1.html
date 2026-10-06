@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payment Successful — Bachelor's Kitchen | WorthKaart</title>
+<meta name="description" content="Your payment was successful. Your Bachelor's Kitchen ebook access link has been sent to your email address.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%98%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Design tokens — identical to index.html */
+  :root{
+    box-sizing:border-box;
+    --ink:#2A1B15;
+    --ink-soft:#6D5C50;
+    --bg:#F7F1E6;
+    --bg-warm:#F1E7D6;
+    --line:#E2D5C3;
+    --rust:#AD5636;
+    --rust-deep:#8C4128;
+    --dark:#221209;
+    --dark-2:#2E1A0E;
+    --cream-on-dark:#F1E4D2;
+    --sage:#E9F0E4;
+    --sage-ink:#3F6B45;
+    --gold:#C89A54;
+    --focus:#4A90D9;
+    --radius-s:6px;
+    --radius-m:14px;
+    --serif:'Playfair Display', 'Georgia', serif;
+    --sans:'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:inherit;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.16 0 0 0 0 0.1 0 0 0 0 0.06 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat:repeat;
+  }
+  a{color:inherit;}
+  h1,h2,h3{font-family:var(--serif); margin:0; font-weight:700; letter-spacing:-0.01em;}
+  p{margin:0;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 20px;}
+  .narrow{max-width:640px; margin:0 auto;}
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:2px;}
+
+  /* Buttons — same as homepage, plus a light-background outline variant */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--sans); font-weight:700; font-size:16px;
+    padding:15px 26px; border-radius:999px; border:none; cursor:pointer;
+    text-decoration:none; min-height:48px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .btn-primary{background:var(--rust); color:#fff; box-shadow:0 10px 24px -10px rgba(173,86,54,0.55);}
+  .btn-primary:hover{background:var(--rust-deep); transform:translateY(-1px);}
+  .btn-primary:active{transform:translateY(0) scale(0.98);}
+  .btn-outline{background:transparent; color:var(--ink); border:1.5px solid var(--line);}
+  .btn-outline:hover{border-color:var(--rust); transform:translateY(-1px);}
+  .btn-outline:active{transform:translateY(0) scale(0.98);}
+  .btn-arrow{transition:transform .18s ease;}
+  .btn:hover .btn-arrow{transform:translateX(3px);}
+
+  /* Header — same as homepage, minus purchase CTA (purchase is complete) */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(247,241,230,0.92);
+    backdrop-filter:saturate(140%) blur(10px);
+    border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top,0px);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 20px; max-width:1120px; margin:0 auto;}
+  .logo{
+    display:inline-flex; align-items:baseline; gap:3px;
+    font-family:var(--serif); font-weight:500; font-size:21px; letter-spacing:0.005em;
+    color:var(--ink); text-decoration:none;
+  }
+  .logo strong{font-weight:800; letter-spacing:-0.01em;}
+  .logo .logo-dot{width:4px; height:4px; border-radius:50%; background:var(--rust); align-self:flex-start; margin-top:6px;}
+
+  /* Page */
+  main{flex:1; display:flex; align-items:flex-start;}
+  .thanks{width:100%; padding:44px 0 64px; text-align:center;}
+  @media(min-width:700px){ .thanks{padding:72px 0 88px;} }
+
+  .success-mark{
+    position:relative; width:60px; height:60px; margin:0 auto 14px;
+    border-radius:50%; background:var(--sage-ink); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .success-mark::after{
+    content:''; position:absolute; inset:0; border-radius:50%;
+    border:2px solid var(--sage-ink); opacity:0;
+    animation:ring 1.4s ease-out .5s 1 both;
+  }
+  .success-mark svg{width:28px; height:28px;}
+  .success-mark path{animation:draw .55s ease-out .35s both;}
+  .status{
+    display:block; font-size:12.5px; font-weight:700; letter-spacing:0.09em;
+    text-transform:uppercase; color:var(--sage-ink); margin-bottom:16px;
+  }
+  .thanks h1{font-size:clamp(30px,7.4vw,48px); line-height:1.1; margin-bottom:16px;}
+  .lede{font-size:17px; color:var(--ink-soft); max-width:44ch; margin:0 auto 28px;}
+
+  .info-card{
+    display:flex; gap:16px; align-items:flex-start; text-align:left;
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius-m);
+    padding:22px; margin-bottom:26px;
+  }
+  .card-icon{
+    flex:none; width:38px; height:38px; border-radius:50%;
+    background:var(--dark); color:var(--gold);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card-icon svg{width:18px; height:18px;}
+  .info-card h2{font-size:18px; margin-bottom:5px;}
+  .info-card p{font-size:14.5px; color:var(--ink-soft);}
+
+  .cta-row{display:flex; flex-direction:column; gap:12px; align-items:stretch; margin-bottom:40px;}
+  @media(min-width:520px){ .cta-row{flex-direction:row; justify-content:center; align-items:center;} }
+
+  .secure{
+    background:var(--sage); border-radius:var(--radius-m);
+    padding:26px 24px; margin-bottom:34px;
+  }
+  .secure .badge-circle{
+    width:44px; height:44px; border-radius:50%;
+    background:var(--sage-ink); color:#fff;
+    display:flex; align-items:center; justify-content:center; margin:0 auto 12px;
+  }
+  .secure h2{font-size:20px; margin-bottom:8px;}
+  .secure p{color:var(--ink-soft); font-size:14.5px; max-width:48ch; margin:0 auto;}
+
+  .support{border-top:1px solid var(--line); padding-top:24px;}
+  .support h3{font-size:17px; margin-bottom:6px;}
+  .support p{font-size:14.5px; color:var(--ink-soft);}
+  .support a{color:var(--rust-deep); font-weight:600; text-underline-offset:3px;}
+  .support a:hover{color:var(--rust);}
+
+  /* Footer — same as homepage */
+  footer{background:var(--dark-2); color:rgba(241,228,210,0.75); padding:48px 0 calc(28px + env(safe-area-inset-bottom,0px));}
+  .footer-grid{display:grid; gap:28px;}
+  @media(min-width:700px){ .footer-grid{grid-template-columns:1.3fr 1fr; gap:20px;} }
+  .footer-grid h4{color:#fff; font-family:var(--sans); font-size:13px; letter-spacing:0.05em; text-transform:uppercase; margin:0 0 14px; font-weight:700;}
+  .footer-grid ul{list-style:none; padding:0; margin:0; display:grid; gap:9px;}
+  .footer-grid a{text-decoration:none; color:rgba(241,228,210,0.75); font-size:14px;}
+  .footer-grid a:hover{color:#fff;}
+  .footer-logo{display:inline-flex; align-items:baseline; gap:3px; font-family:var(--serif); font-weight:500; font-size:22px; color:#fff; margin-bottom:10px;}
+  .footer-logo strong{font-weight:800;}
+  .footer-logo .logo-dot{width:4px; height:4px; border-radius:50%; background:var(--gold); align-self:flex-start; margin-top:6px;}
+  .footer-tag{font-size:13.5px; color:rgba(241,228,210,0.55); max-width:36ch;}
+  .footer-bottom{
+    margin-top:36px; padding-top:20px; border-top:1px solid rgba(241,228,210,0.12);
+    font-size:12.5px; color:rgba(241,228,210,0.5);
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
+  }
+
+  /* Entrance — one calm staged sequence on load (visible by default if motion is off) */
+  .rise{animation:rise .6s ease both;}
+  .d1{animation-delay:.05s;} .d2{animation-delay:.15s;} .d3{animation-delay:.22s;}
+  .d4{animation-delay:.3s;} .d5{animation-delay:.38s;} .d6{animation-delay:.46s;} .d7{animation-delay:.54s;}
+  @keyframes rise{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);}}
+  @keyframes draw{from{stroke-dasharray:26; stroke-dashoffset:26;} to{stroke-dasharray:26; stroke-dashoffset:0;}}
+  @keyframes ring{0%{opacity:.45; transform:scale(1);} 100%{opacity:0; transform:scale(1.7);}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Main">
+    <a href="/" class="logo" aria-label="WorthKaart home">Worth<strong>Kaart</strong><span class="logo-dot" aria-hidden="true"></span></a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="thanks">
+    <div class="wrap narrow">
+
+      <div class="success-mark rise d1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="status rise d2" role="status">Payment Successful</span>
+
+      <h1 class="rise d3">Your Bachelor's Kitchen is Ready.</h1>
+      <p class="lede rise d4">Thank you for your purchase. You can now download your ebook using the button below.</p>
+
+      <div class="info-card rise d5">
+        <div class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </div>
+        <div>
+          <h2>Download your ebook</h2>
+          <p>Click the DOWNLOAD YOUR PDF button below to open and download your ebook.</p>
+        </div>
+      </div>
+
+      <div class="cta-row rise d6">
+        <a href="https://drive.google.com/file/d/1LNIJdeLVcU4GuvR-1-i32HyFrIF_gNLA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="btn btn-primary">DOWNLOAD YOUR PDF <span class="btn-arrow" aria-hidden="true">→</span></a>
+        <a href="/" class="btn btn-outline">Back to WorthKaart</a>
+      </div>
+
+      <div class="secure rise d7">
+        <div class="badge-circle" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 22s8-4.5 8-11V5l-8-3-8 3v6c0 6.5 8 11 8 11Z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h2>Your access is secure</h2>
+        <p>Your purchase is verified through Razorpay and your ebook is available through a secure download link.</p>
+      </div>
+
+      <div class="support rise d7">
+        <h3>Having trouble downloading?</h3>
+        <p>If the button doesn't work, contact us at <a href="mailto:worthkaart@gmail.com">worthkaart@gmail.com</a></p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Worth<strong>Kaart</strong><span class="logo-dot" aria-hidden="true"></span></div>
+        <p class="footer-tag">Bachelor's Kitchen — 99 High-Protein Recipes on a Budget. A digital cookbook for real life.</p>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="mailto:worthkaart@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 WorthKaart. All rights reserved.</span>
+      <span>worthkaart@gmail.com</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
